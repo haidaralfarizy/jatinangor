@@ -146,6 +146,7 @@ body::after {
     font-size: 3rem;
     letter-spacing: -0.03em;
     background: linear-gradient(to right, var(--text-primary), var(--primary));
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     line-height: 1.2;
 }
