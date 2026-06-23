@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jatinangor Guide — Panduan Lengkap Mahasiswa Jatinangor</title>
+    <meta name="description"
+        content="Direktori tempat-tempat penting di sekitar kampus ITB Jatinangor dan Unpad. Oleh mahasiswa, untuk mahasiswa." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="site-brand">
+                <span class="brand-mark">📍</span>
+                <span class="brand-name">JatiGuide</span>
+            </div>
+            <p class="site-tagline">Tempat-tempat penting di Jatinangor — dikurasi mahasiswa ITB, untuk mahasiswa.</p>
+            <a href="#map" class="map-jump-btn">Lihat Peta →</a>
+        </div>
+        <div class="header-disclaimer">
+            ⚠️ Semua entri dikurasi secara mandiri. Verifikasi sendiri sebelum berkunjung, ya.
+        </div>
+    </header>
+
+    <div class="filter-bar" id="filterBar">
+        <div class="filter-bar-inner">
+            <div class="search-wrap">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" class="search-input"
+                    placeholder="Cari tempat, kategori, atau kata kunci..." autocomplete="off" />
+                <button class="clear-search" id="clearSearch" aria-label="Hapus pencarian">✕</button>
+            </div>
+
+            <div class="filter-row">
+                <div class="category-pills" id="categoryPills">
+                </div>
+                <div class="price-filters">
+                    <button class="price-btn" data-price="1">Rp</button>
+                    <button class="price-btn" data-price="2">Rp Rp</button>
+                    <button class="price-btn" data-price="3">Rp Rp Rp</button>
+                </div>
+            </div>
+
+            <div class="filter-meta">
+                <span id="resultCount" class="result-count">Memuat...</span>
+                <button class="clear-all-btn" id="clearAllBtn">Hapus semua filter</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="places-grid" id="placesGrid">
+        </div>
+        <div class="empty-state" id="emptyState" hidden>
+            <div class="empty-icon">🗺️</div>
+            <p class="empty-title">Tidak ada tempat yang cocok.</p>
+            <p class="empty-sub">Coba kata kunci lain atau hapus beberapa filter.</p>
+            <button class="clear-all-btn" id="clearAllBtn2">Hapus semua filter</button>
+        </div>
+    </main>
+
+    <section class="map-section" id="map">
+        <div class="map-header">
+            <h2 class="map-title">Peta Jatinangor</h2>
+            <p class="map-note">Peta dikelola secara terpisah di Google My Maps. Beberapa entri terbaru mungkin belum
+                muncul.</p>
+        </div>
+        <div class="map-embed-wrap">
+            <iframe class="map-iframe"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15838.123456789!2d107.7699!3d-6.9317!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e0a4e0e0e0e0%3A0x0!2sJatinangor%2C+Sumedang!5e0!3m2!1sid!2sid!4v1234567890"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                title="Peta Jatinangor"></iframe>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <span class="brand-name">📍 JatiGuide</span>
+                <p class="footer-update">Terakhir diperbarui: <span id="siteLastUpdated"></span></p>
+            </div>
+            <div class="footer-right">
+                <a href="https://github.com/haidaralfarizy/jatinangor" target="_blank" rel="noopener"
+                    class="footer-link">GitHub →</a>
+                <a href="https://github.com/haidaralfarizy/jatinangor/issues/new" target="_blank" rel="noopener"
+                    class="footer-link">Tambah tempat →</a>
+            </div>
+        </div>
+        <p class="footer-credit">Dibuat oleh mahasiswa STEI-K ITB · Jatinangor</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
