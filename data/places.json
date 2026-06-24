@@ -1,20 +1,78 @@
 [
-    {
-        "id": "food-cheap-001",
-        "name": "Warteg Ibu Sari Premium",
-        "category": "food-cheap",
-        "tags": [
-            "Nasi Rames",
-            "Lauk Pauk",
-            "Super Murah",
-            "Mahasiswa"
-        ],
-        "address": "hahahahah",
-        "maps_url": "https://maps.google.com/?q=Warteg+Ibu+Sari+Jatinangor",
-        "price_range": 1,
-        "description": "Gamer",
-        "hours": "Sen–Sab 06.00–21.00",
-        "phone": "0812-2345-6789",
-        "last_updated": "2026-06-01"
-    }
+  {
+    "id": "food-cheap-001",
+    "name": "Warteg Ibu Sari Premium",
+    "category": "food-cheap",
+    "tags": ["Nasi Rames", "Lauk Pauk", "Murah", "Mahasiswa"],
+    "address": "Jl. Raya Jatinangor No. 123",
+    "maps_url": "https://maps.google.com/?q=Warteg+Ibu+Sari+Jatinangor",
+    "price_range": 1,
+    "description": "Warteg andalan mahasiswa dengan pilihan lauk yang sangat beragam dan harga bersahabat.",
+    "hours": "Sen–Sab 06.00–21.00",
+    "phone": "0812-2345-6789",
+    "last_updated": "2026-06-01"
+  },
+  {
+    "id": "food-cafe-001",
+    "name": "Plumeria Cafe",
+    "category": "food-cafe-wifi",
+    "tags": ["Kopi", "Wifi Ngebut", "Nugas"],
+    "address": "Jl. Ciseke Besar No. 45",
+    "maps_url": "https://maps.google.com/?q=Plumeria+Cafe+Jatinangor",
+    "price_range": 2,
+    "description": "Tempat nugas nyaman dengan kopi enak. Colokan banyak dan wifi kencang.",
+    "hours": "Setiap Hari 10.00–23.00",
+    "featured": true,
+    "last_updated": "2026-06-15"
+  },
+  {
+    "id": "printing-001",
+    "name": "Tiara Fotokopi & Print",
+    "category": "printing",
+    "tags": ["Print Warna", "Jilid Hardcover", "Skripsi"],
+    "address": "Gerbang Lama Unpad",
+    "maps_url": "https://maps.google.com/?q=Tiara+Fotokopi",
+    "price_range": 1,
+    "description": "Buka 24 jam saat musim ujian. Melayani jilid skripsi kilat.",
+    "phone": "0856-7890-1234",
+    "last_updated": "2025-10-01"
+  },
+  {
+    "id": "pharmacy-001",
+    "name": "Apotek K-24 Jatinangor",
+    "category": "pharmacy",
+    "tags": ["Obat", "Vitamin", "24 Jam"],
+    "address": "Jl. Raya Jatinangor (Sebelah Jatos)",
+    "maps_url": "https://maps.google.com/?q=Apotek+K24+Jatinangor",
+    "price_range": 2,
+    "description": "Apotek buka 24 jam. Menyediakan obat-obatan lengkap dan alat kesehatan dasar.",
+    "hours": "Buka 24 Jam",
+    "featured": true,
+    "last_updated": "2026-01-20"
+  },
+  {
+    "id": "laundry-001",
+    "name": "KlinKlin Laundry",
+    "category": "laundry",
+    "tags": ["Kiloan", "Setrika", "Antar Jemput"],
+    "address": "GKPN Jatinangor",
+    "maps_url": "https://maps.google.com/?q=Laundry+Jatinangor",
+    "price_range": 1,
+    "description": "Laundry kiloan murah meriah, gratis antar jemput area Ciseke dan GKPN.",
+    "hours": "Sen–Min 08.00–20.00",
+    "phone": "0811-2233-4455",
+    "last_updated": "2026-05-10"
+  },
+  {
+    "id": "recreation-001",
+    "name": "Jatinangor Town Square (Jatos)",
+    "category": "recreation",
+    "tags": ["Mall", "Bioskop", "Belanja"],
+    "address": "Jl. Raya Jatinangor No. 150",
+    "maps_url": "https://maps.google.com/?q=Jatos",
+    "price_range": 3,
+    "description": "Satu-satunya mall di Jatinangor. Ada bioskop, supermarket, dan berbagai tempat makan.",
+    "hours": "Setiap Hari 10.00–22.00",
+    "last_updated": "2026-06-20"
+  }
 ]

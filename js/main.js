@@ -1,186 +1,139 @@
-'use strict';
-
-// 1. Categories Mapping
-const CATEGORIES = {
-    'food-cheap': { label: 'Warteg', icon: 'utensils' },
-    'food-restaurant': { label: 'Restoran', icon: 'chef-hat' },
-    'food-cafe-wifi': { label: 'Kafe', icon: 'coffee' },
+/* ============================================================
+   TRANSLATIONS
+   ============================================================ */
+const TRANSLATIONS = {
+    id: {
+        "hero_title": "Jatinangor Guide",
+        "hero_tagline": "Apapun yang kamu butuhkan di Jatinangor, dari mahasiswa, untuk mahasiswa.",
+        "hero_subtitle": "Panduan lengkap tempat-tempat penting di sekitar kampus ITB Jatinangor dan Unpad.",
+        "hero_stat_listings": "Lokasi",
+        "hero_stat_categories": "Kategori",
+        "hero_stat_updated": "Terakhir Diperbarui",
+        "hero_disclaimer": "Entri dikurasi oleh mahasiswa dan diverifikasi berkala. Informasi mungkin tidak selalu yang terbaru.",
+    },
+    en: {
+        "hero_title": "Jatinangor Guide",
+        "hero_tagline": "Everything you need in Jatinangor, by students, for students.",
+        "hero_subtitle": "A comprehensive guide to essential places around ITB Jatinangor and Unpad campuses.",
+        "hero_stat_listings": "Places",
+        "hero_stat_categories": "Categories",
+        "hero_stat_updated": "Last Updated",
+        "hero_disclaimer": "Entries are curated by students and verified periodically. Information may not always be up-to-date.",
+    }
 };
 
-// 2. Application State
+/* ------------------------------------------------------------
+   STATE
+   ------------------------------------------------------------ */
+let currentLang = localStorage.getItem('lang') || 'id';
 let allPlaces = [];
-let activeCategory = null;
-let searchQuery = '';
 
-// 3. Init Function
-async function init() {
-    try {
-        const response = await fetch('data/places.json');
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        allPlaces = await response.json();
-    } catch (error) {
-        console.error('Gagal mengambil data tempat:', error);
-        allPlaces = [];
-    }
+/* ============================================================
+   LANGUAGE
+   ============================================================ */
+function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    document.documentElement.lang = lang;
 
-    // Render filter categories
-    renderCategoryPills();
-
-    // Initial render (show all)
-    filterAndRender();
-
-    // Setup live search
-    const searchInput = document.getElementById('search-input');
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            searchQuery = e.target.value.trim().toLowerCase();
-            filterAndRender();
-        });
-    }
-}
-
-// 4. Render Category Pills
-function renderCategoryPills() {
-    const container = document.getElementById('category-pills');
-    if (!container) return;
-
-    container.innerHTML = '';
-
-    for (const [key, cat] of Object.entries(CATEGORIES)) {
-        const button = document.createElement('button');
-        button.className = 'category-pill';
-        button.innerHTML = `<i data-lucide="${cat.icon}" class="icon-xs"></i> <span>${cat.label}</span>`;
-
-        button.addEventListener('click', () => {
-            // Toggle active class
-            const currentlyActive = button.classList.contains('active');
-
-            // Reset all pills
-            document.querySelectorAll('.category-pill').forEach(btn => btn.classList.remove('active'));
-
-            if (currentlyActive) {
-                activeCategory = null;
-            } else {
-                button.classList.add('active');
-                activeCategory = key;
-            }
-
-            filterAndRender();
-        });
-
-        container.appendChild(button);
-    }
-}
-
-// 5. Filter and Render Loop
-function filterAndRender() {
-    let filtered = allPlaces;
-
-    // Filter by category
-    if (activeCategory) {
-        filtered = filtered.filter(p => p.category === activeCategory);
-    }
-
-    // Filter by search query
-    if (searchQuery) {
-        filtered = filtered.filter(p => {
-            const nameMatch = p.name ? p.name.toLowerCase().includes(searchQuery) : false;
-            const descMatch = p.description ? p.description.toLowerCase().includes(searchQuery) : false;
-            const addressMatch = p.address ? p.address.toLowerCase().includes(searchQuery) : false;
-            const tagsMatch = p.tags ? p.tags.some(t => t.toLowerCase().includes(searchQuery)) : false;
-            return nameMatch || descMatch || addressMatch || tagsMatch;
-        });
-    }
-
-    renderCards(filtered);
-}
-
-// 6. Render Place Cards
-function renderCards(places) {
-    const grid = document.getElementById('directory-grid');
-    if (!grid) return;
-
-    // We make sure the grid is fully visible so the children can animate in properly without double-fading.
-    grid.style.opacity = '1';
-    grid.style.animation = 'none';
-
-    grid.innerHTML = '';
-
-    if (places.length === 0) {
-        grid.innerHTML = `
-      <div class="empty-state" style="opacity: 0; animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
-        <i data-lucide="info" class="empty-state-icon"></i>
-        <h3>Tidak ada tempat ditemukan</h3>
-        <p>Coba gunakan kata kunci pencarian lain atau pilih kategori berbeda.</p>
-      </div>`;
-        lucide.createIcons();
-        return;
-    }
-
-    places.forEach((place, index) => {
-        const cat = CATEGORIES[place.category] || { label: place.category, icon: 'map-pin' };
-
-        // Price range representation
-        const priceText = 'Rp'.repeat(place.price_range || 1);
-
-        // HTML detail options
-        const hoursHTML = place.hours
-            ? `<p class="card-detail"><i data-lucide="clock" class="icon-xs"></i> <span>${escapeHTML(place.hours)}</span></p>`
-            : '';
-        const phoneHTML = place.phone
-            ? `<p class="card-detail"><i data-lucide="phone" class="icon-xs"></i> <span>${escapeHTML(place.phone)}</span></p>`
-            : '';
-
-        // Tags HTML
-        const tagsHTML = place.tags && place.tags.length > 0
-            ? `<div class="card-tags">${place.tags.map(t => `<span class="tag">${escapeHTML(t)}</span>`).join('')}</div>`
-            : '';
-
-        // Card Element creation
-        const card = document.createElement('div');
-        card.className = 'card';
-
-        // Add staggered animation dynamically
-        card.style.opacity = '0';
-        card.style.animation = 'fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards';
-        card.style.animationDelay = `${index * 0.06}s`;
-
-        card.innerHTML = `
-      <div class="card-header">
-        <span class="badge badge-category">
-          <i data-lucide="${cat.icon}" class="icon-xs"></i> ${escapeHTML(cat.label)}
-        </span>
-        <span class="badge badge-price">${priceText}</span>
-      </div>
-      <h3 class="card-title">${escapeHTML(place.name)}</h3>
-      <p class="card-description">${escapeHTML(place.description || '')}</p>
-      <div class="card-details">
-        <p class="card-detail"><i data-lucide="map-pin" class="icon-xs"></i> <span>${escapeHTML(place.address)}</span></p>
-        ${hoursHTML}
-        ${phoneHTML}
-      </div>
-      ${tagsHTML}
-      <div class="card-footer">
-        <a href="${escapeHTML(place.maps_url)}" target="_blank" rel="noopener noreferrer" class="btn-maps">
-          <i data-lucide="external-link" class="icon-xs"></i> Buka Peta
-        </a>
-      </div>
-    `;
-
-        grid.appendChild(card);
+    const dict = TRANSLATIONS[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
     });
 
-    // Re-initialize Lucide Icons for dynamic content
-    lucide.createIcons();
+    document.getElementById('lang-id').classList.toggle('active', lang === 'id');
+    document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+
+    if (allPlaces.length > 0) {
+        populateHeroStats();
+    }
 }
 
-// 7. Security Escape Helper
-function escapeHTML(str) {
-    if (!str) return '';
-    const div = document.createElement('div');
-    div.appendChild(document.createTextNode(str));
-    return div.innerHTML;
+/* ============================================================
+   THEME
+   ============================================================ */
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+    }
+    updateThemeIcon();
 }
 
-// Run bootstrap
-document.addEventListener('DOMContentLoaded', init);
+function toggleTheme() {
+    const isDark = document.documentElement.hasAttribute('data-theme');
+    if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    }
+    updateThemeIcon();
+}
+
+function updateThemeIcon() {
+    const icon = document.getElementById('theme-icon');
+    if (!icon) return;
+    const isDark = document.documentElement.hasAttribute('data-theme');
+
+    // Create a new i tag to replace the svg
+    const newIcon = document.createElement('i');
+    newIcon.id = 'theme-icon';
+    newIcon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+    newIcon.className = 'icon-sm';
+
+    icon.parentNode.replaceChild(newIcon, icon);
+
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+}
+
+/* ============================================================
+   DATA POPULATION (HERO)
+   ============================================================ */
+function populateHeroStats() {
+    const listingCountEl = document.getElementById('hero-listing-count');
+    const categoryCountEl = document.getElementById('hero-category-count');
+    const lastUpdatedEl = document.getElementById('hero-last-updated');
+
+    if (!listingCountEl || !categoryCountEl || !lastUpdatedEl) return;
+
+    listingCountEl.textContent = allPlaces.length;
+
+    const uniqueCategories = new Set(allPlaces.map(p => p.category));
+    categoryCountEl.textContent = uniqueCategories.size;
+
+    const now = new Date();
+    const options = { year: 'numeric', month: 'short' };
+    lastUpdatedEl.textContent = now.toLocaleDateString(currentLang === 'id' ? 'id-ID' : 'en-US', options);
+}
+
+/* ============================================================
+   INITIALIZATION
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+    setLanguage(currentLang);
+
+    // Fetch places
+    fetch('data/places.json')
+        .then(res => res.json())
+        .then(data => {
+            allPlaces = data;
+            populateHeroStats();
+        })
+        .catch(err => {
+            console.error('Error fetching places:', err);
+        });
+
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+});

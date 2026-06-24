@@ -4,67 +4,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jatinangor Guide — Panduan Mahasiswa Jatinangor</title>
+    <title>Jatinangor Guide — Panduan Lengkap Mahasiswa ITB Jatinangor</title>
     <meta name="description"
-        content="Direktori tempat makan, laundry, fotokopi, dan layanan penting lainnya di sekitar kampus ITB Jatinangor dan Unpad.">
+        content="Direktori lengkap tempat-tempat penting di Jatinangor untuk mahasiswa ITB. Temukan warteg, fotokopi, laundry, apotek, dan lainnya.">
 
+    <!-- Google Fonts: Sora (display) + Inter (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
+    <!-- Favicon -->
     <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'></path><circle cx='12' cy='10' r='3'></circle></svg>">
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23007AFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'></path><circle cx='12' cy='10' r='3'></circle></svg>">
 
+    <!-- Styles -->
     <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
 
-    <header class="header">
-        <div class="container">
-            <div class="logo">
-                <i data-lucide="map-pin" class="logo-icon"></i>
-                <h1>Jatinangor Guide</h1>
+    <!-- ============================================
+       1. Header / Hero Section
+       ============================================ -->
+    <header class="hero">
+        <div class="top-bar">
+            <div class="glass-pill">
+                <button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark Mode" onclick="toggleTheme()">
+                    <i data-lucide="moon" class="icon-sm" id="theme-icon"></i>
+                </button>
+                <span class="lang-divider">|</span>
+                <i data-lucide="globe" class="icon-sm" style="color: rgba(255,255,255,0.8); margin-left: 4px;"></i>
+                <button id="lang-id" class="lang-btn active" onclick="setLanguage('id')">ID</button>
+                <span class="lang-divider">·</span>
+                <button id="lang-en" class="lang-btn" onclick="setLanguage('en')">EN</button>
             </div>
-            <p class="tagline">Segala yang kamu butuhkan di Jatinangor, dari mahasiswa untuk mahasiswa.</p>
+        </div>
+        <div class="hero-inner">
+            <h1 class="hero-title"><i data-lucide="map" class="icon-lg"></i> <span data-i18n="hero_title">Jatinangor
+                    Guide</span></h1>
+            <p class="hero-tagline" data-i18n="hero_tagline">Apapun yang kamu butuhkan di Jatinangor, dari mahasiswa,
+                untuk mahasiswa.</p>
+            <p class="hero-subtitle" data-i18n="hero_subtitle">Panduan lengkap tempat-tempat penting di sekitar kampus
+                ITB Jatinangor dan Unpad.</p>
+
+            <!-- Dynamic Hero Stats -->
+            <div class="hero-stats" id="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-value" id="hero-listing-count">—</span>
+                    <span class="hero-stat-label" data-i18n="hero_stat_listings">Lokasi</span>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat">
+                    <span class="hero-stat-value" id="hero-category-count">—</span>
+                    <span class="hero-stat-label" data-i18n="hero_stat_categories">Kategori</span>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat">
+                    <span class="hero-stat-value" id="hero-last-updated">—</span>
+                    <span class="hero-stat-label" data-i18n="hero_stat_updated">Terakhir Diperbarui</span>
+                </div>
+            </div>
+
+            <p class="hero-disclaimer" data-i18n="hero_disclaimer">Entri dikurasi oleh mahasiswa dan diverifikasi
+                berkala. Informasi mungkin tidak selalu yang terbaru.</p>
         </div>
     </header>
 
-    <section class="controls-section">
-        <div class="container">
-            <div class="search-box">
-                <i data-lucide="search" class="search-icon"></i>
-                <input type="text" id="search-input" placeholder="Cari warteg, kafe nugas, fotokopi, laundry..."
-                    autocomplete="off">
-            </div>
-
-            <div id="category-pills" class="category-pills">
-            </div>
-        </div>
-    </section>
-
-    <main class="main-content">
-        <div class="container">
-            <div id="directory-grid" class="directory-grid">
-            </div>
-        </div>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <p>© 2026 Jatinangor Guide. Dibuat dengan ❤️ oleh mahasiswa STEI-K.</p>
-            <p class="footer-links">
-                <a href="https://github.com/haidaralfarizy/jatinangor" target="_blank" rel="noopener noreferrer">
-                    <i data-lucide="github" class="icon-xs"></i> GitHub
-                </a>
-            </p>
-        </div>
-    </footer>
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="js/main.js"></script>
+
 </body>
 
 </html>
